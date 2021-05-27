@@ -1,3 +1,10 @@
+/* =====================
+ * Category: School Project
+ * File Name: Master
+ * Programmer: Noam Cohen
+ * Date: 27/5/2021
+ */=====================
+
 #include <Arduino.h>
 
 // Bluetooth Assets

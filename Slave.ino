@@ -91,37 +91,40 @@ int CutPos=180, shortPos=100;
 //==================
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(Green1Pin,OUTPUT);
-  pinMode(Green2Pin,OUTPUT);
-  pinMode(Green3Pin,OUTPUT);
-  pinMode(Red1Pin,OUTPUT);
-  pinMode(Red2Pin,OUTPUT);
-  pinMode(Red3Pin,OUTPUT);
-  for (int i = 0; i < 6; i++){ pinMode(i+1,OUTPUT );}
+  Serial.begin(9600); // Establish communication at 9600 'baud rate'.
+  pinMode(Green1Pin,OUTPUT); // Green Led - #1 RGB Led Setup.
+  pinMode(Green2Pin,OUTPUT); // Green Led - #2 RGB Led Setup.
+  pinMode(Green3Pin,OUTPUT); // Green Led - #3 RGB Led Setup.
+  pinMode(Red1Pin,OUTPUT); // Red Led - #1 RGB Led Setup.
+  pinMode(Red2Pin,OUTPUT); // Red Led - #2 RGB Led Setup.
+  pinMode(Red3Pin,OUTPUT); // Red Led - #3 RGB Led Setup.
+  for (int i = 0; i < 6; i++){ pinMode(i+1,OUTPUT );} // 6 Motordrivers connections Setups.
+  // Turns off all motors.
   digitalWrite(IN1,LOW); digitalWrite(IN2,LOW); digitalWrite(IN3,LOW); digitalWrite(IN4,LOW); digitalWrite(IN5,LOW); digitalWrite(IN6,LOW);
-  plateServo.attach(pServoPin);
-  rackServo.attach(rServoPin);
+  plateServo.attach(pServoPin); // Declaring the pin for the Plate Servo.
+  rackServo.attach(rServoPin); // Declaring the pin for the Rack & Pinion Servo.
 }
 
 void loop() {
-  disCM1=SharpIR1.distance(); // Returns the distance to the object.
-  disCM2=SharpIR2.distance(); // Returns the distance to the object.
-  disCM3=SharpIR3.distance(); // Returns the distance to the object.
+  disCM1=SharpIR1.distance(); // Returns the distance to the object in container #1.
+  disCM2=SharpIR2.distance(); // Returns the distance to the object in container #2.
+  disCM3=SharpIR3.distance(); // Returns the distance to the object in container #3.
 
-  CheckInvetory1();
-  CheckInvetory2();
-  CheckInvetory3();
+  CheckInvetory1(); // Changes the RGB LED color by deciding if it's empty or not [Container #1]. 
+  CheckInvetory2(); // Changes the RGB LED color by deciding if it's empty or not [Container #2]. 
+  CheckInvetory3(); // Changes the RGB LED color by deciding if it's empty or not [Container #3]. 
+  
+  // Starts the Toppings process if it gets a signal.
   if(digitalRead(ToppingStartProcessPin)==1){
     SauceMotor();
     CheeseMotor();
-    if (digitalRead(StatePin)==1){ToppingsMotor();}
+    if (digitalRead(StatePin)==1){ToppingsMotor();} // Pours toppings if the user declared to do so.
   }
 
-  if(digitalRead(CuttingStartProcessPin)==1){
+// Starts the Cutting process if it gets a signal.
+  if(digitalRead(CuttingStartProcessPin)==1){ 
     StartCutting();
   }
-
 }
 
 void CheckInvetory1(){

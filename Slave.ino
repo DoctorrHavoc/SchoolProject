@@ -1,3 +1,12 @@
+/* 
+ * ╔═════════════════════════╗
+ * ║Category: School Project ║
+ * ║File Name: Slave         ║
+ * ║Programmer: Noam Cohen   ║
+ * ║Date: 28/5/2021          ║
+ * ╚═════════════════════════╝
+ */
+
 #include <Arduino.h>
 #include <SharpIR.h>
 #include <Servo.h>
@@ -189,7 +198,7 @@ void StartCutting(){
   rackServo.write(CutPos);
   rackServo.write(shortPos);
 
-  // Second Cut - 6 Slices
+  // Third Cut - 6 Slices
   plateServo.write(120);
   rackServo.write(CutPos);
   

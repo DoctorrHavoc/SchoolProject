@@ -1,14 +1,6 @@
 #include <Arduino.h>
 #include <SharpIR.h>
-
-// Toppings Assets
-#define ToppingState 10
-#define ToppingSignal 11
-//==================
-
-// Cutting Assets
-#define CuttingSignal 12
-//==================
+#include <Servo.h>
 
 /* Models : 
 - GP2Y0A02YK0F --> "20150"
@@ -56,7 +48,9 @@ int dis3;
 
 //==================
 
-// MotorDriver1
+// MotorDriver1 Assets
+#define Motor1Delay 2500
+#define Motor2Delay 2500
 #define IN1 22
 #define IN2 24
 #define IN3 26
@@ -64,9 +58,27 @@ int dis3;
 
 //==================
 
-// MotorDriver2
+// MotorDriver2 Assets
+#define Motor3Delay 2500
 #define IN5 30
 #define IN6 32
+//==================
+
+// Plate Servo Assets
+Servo plateServo;
+#define pServoPin 8
+//==================
+
+// Rack & Pinion Servo Assets
+Servo rackServo;
+#define rServoPin 9
+int CutPos=180, shortPos=100;
+//==================
+
+// Functions Assets
+#define StatePin 10
+#define ToppingStartProcessPin 11
+#define CuttingStartProcessPin 12
 //==================
 
 void setup() {
@@ -77,7 +89,10 @@ void setup() {
   pinMode(Red1Pin,OUTPUT);
   pinMode(Red2Pin,OUTPUT);
   pinMode(Red3Pin,OUTPUT);
-
+  for (int i = 0; i < 6; i++){ pinMode(i+1,OUTPUT );}
+  digitalWrite(IN1,LOW); digitalWrite(IN2,LOW); digitalWrite(IN3,LOW); digitalWrite(IN4,LOW); digitalWrite(IN5,LOW); digitalWrite(IN6,LOW);
+  plateServo.attach(pServoPin);
+  rackServo.attach(rServoPin);
 }
 
 void loop() {
@@ -88,6 +103,16 @@ void loop() {
   CheckInvetory1();
   CheckInvetory2();
   CheckInvetory3();
+  if(digitalRead(ToppingStartProcessPin)==1){
+    SauceMotor();
+    CheeseMotor();
+    if (digitalRead(StatePin)==1){ToppingsMotor();}
+  }
+
+  if(digitalRead(CuttingStartProcessPin)==1){
+    StartCutting();
+  }
+
 }
 
 void CheckInvetory1(){
@@ -121,4 +146,53 @@ void CheckInvetory3(){
     digitalWrite(Red3Pin,LOW);
     digitalWrite(Green3Pin,HIGH);
   }
+}
+
+void SauceMotor(){
+  plateServo.write(0); delay(500);
+  digitalWrite(IN1,HIGH);
+  digitalWrite(IN2,LOW);
+  plateServo.write(180);
+  delay(Motor1Delay);
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,LOW);
+}
+
+void CheeseMotor(){
+  plateServo.write(0); delay(500);
+  digitalWrite(IN3,HIGH);
+  digitalWrite(IN4,LOW);
+  plateServo.write(180);
+  delay(Motor2Delay);
+  digitalWrite(IN3,LOW);
+  digitalWrite(IN4,LOW);
+}
+
+void ToppingsMotor(){
+  plateServo.write(0); delay(500);
+  digitalWrite(IN5,HIGH);
+  digitalWrite(IN6,LOW);
+  plateServo.write(180);
+  delay(Motor3Delay);
+  digitalWrite(IN5,LOW);
+  digitalWrite(IN6,LOW);
+}
+
+void StartCutting(){
+  // First Cut - 2 Slices
+  plateServo.write(0);
+  rackServo.write(CutPos);
+  rackServo.write(shortPos);
+  
+  // Second Cut - 4 Slices
+  plateServo.write(60);
+  rackServo.write(CutPos);
+  rackServo.write(shortPos);
+
+  // Second Cut - 6 Slices
+  plateServo.write(120);
+  rackServo.write(CutPos);
+  
+  rackServo.write(0);
+  plateServo.write(0);
 }

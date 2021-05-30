@@ -188,7 +188,7 @@ void CheeseMotor() {
 void ToppingsMotor() {
   plateServo.write(0); delay(500);
   digitalWrite(IN5, HIGH);
-  digitalWrite(IN6, LOW);
+  digitalWrite(IN6, LOW); 
   plateServo.write(180);
   delay(Motor3Delay);
   digitalWrite(IN5, LOW);

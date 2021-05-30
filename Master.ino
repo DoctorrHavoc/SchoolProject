@@ -65,9 +65,8 @@ void setup() {
 
 void loop() {
   LaserVal = digitalRead(LaserReciverpin); // Checks if the laser is blocked or not.
-
   LDRval = analogRead(LDRpin); // Reads the LDR sensor value.
-  Serial.println(LDRval ); delay(500);
+
   if (Serial.available()) { // Waits for Input.
     val = Serial.read(); // Reads the data that was sent.
     switch (val) { // Takes the data and runs it through statments.

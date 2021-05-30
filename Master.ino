@@ -15,7 +15,7 @@ char val;
 
 // LDR Assets
 #define LDRpin A0
-int maxLight = 1200;
+int maxLight = 500;
 int LDRval;
 //==================
 
@@ -39,7 +39,7 @@ boolean isToppings;
 
 // This function checks if the LDR is blocked and that there's nothing in the way to make sure that it's safe to start.
 boolean isSecure(boolean laser, int ldrVal) {
-  if (laser == LOW and ldrVal <= maxLight) {
+  if (laser == HIGH and ldrVal <= maxLight) {
     return true;
   }
   else return false;
@@ -65,8 +65,9 @@ void setup() {
 
 void loop() {
   LaserVal = digitalRead(LaserReciverpin); // Checks if the laser is blocked or not.
-  LDRval = analogRead(LDRpin); // Reads the LDR sensor value.
 
+  LDRval = analogRead(LDRpin); // Reads the LDR sensor value.
+  Serial.println(LDRval ); delay(500);
   if (Serial.available()) { // Waits for Input.
     val = Serial.read(); // Reads the data that was sent.
     switch (val) { // Takes the data and runs it through statments.

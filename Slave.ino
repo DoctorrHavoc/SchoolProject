@@ -129,7 +129,6 @@ void loop() {
 }
 
 void CheckInvetory1() {
-  Serial.println(disCM1);
   if (disCM1 <= MinDistanceCM) {
     digitalWrite(Red1Pin, HIGH);
     digitalWrite(Green1Pin, LOW);

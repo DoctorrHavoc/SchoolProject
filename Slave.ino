@@ -26,19 +26,16 @@ int disCM1, disCM2, disCM3;
 // SharpIR #1 Assets
 #define irPin1 A0
 SharpIR SharpIR1(irPin1, irModel);
-int dis1;
 //==================
 
 // SharpIR #2 Assets
 #define irPin2 A1
 SharpIR SharpIR2(irPin2, irModel);
-int dis2;
 //==================
 
 // SharpIR #3 Assets
 #define irPin3 A2
 SharpIR SharpIR3(irPin3, irModel);
-int dis3;
 //==================
 
 // LED #1 Assets

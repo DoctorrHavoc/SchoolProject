@@ -218,17 +218,17 @@ void ToppingsMotor() {
 void StartCutting() {
   // First Cut - 2 Slices
   plateServo.write(0);
-  rackServo.write(CutPos);
-  rackServo.write(shortPos);
+  rackServo.write(CutPos); delay(600);
+  rackServo.write(shortPos); delay(600);
 
   // Second Cut - 4 Slices
-  plateServo.write(60);
-  rackServo.write(CutPos);
-  rackServo.write(shortPos);
+  plateServo.write(60); delay(600);
+  rackServo.write(CutPos);delay(600);
+  rackServo.write(shortPos); delay(600);
 
   // Third Cut - 6 Slices
-  plateServo.write(120);
-  rackServo.write(CutPos);
+  plateServo.write(120); delay(600);
+  rackServo.write(CutPos);delay(600);
 
   rackServo.write(0);
   plateServo.write(0);
